@@ -20,7 +20,7 @@ var generateRandomString = function (length) {
 };
 
 module.exports = function (config, windowParams) {
-  function getAuthorizationCode(opts) {
+  function getBearerToken(opts) {
     opts = opts || {};
 
     if (!config.redirectUri) {
@@ -28,7 +28,7 @@ module.exports = function (config, windowParams) {
     }
 
     var urlParams = {
-      response_type: 'code',
+      response_type: 'token',
       redirect_uri: config.redirectUri,
       client_id: config.clientId,
       state: generateRandomString(16)
@@ -60,7 +60,7 @@ module.exports = function (config, windowParams) {
           }
         var url_parts = nodeUrl.parse(url, true);
         var query = url_parts.query;
-        var code = query.code;
+        var token = query.access_token;
         var error = query.error;
 
         if (error !== undefined) {
@@ -70,8 +70,8 @@ module.exports = function (config, windowParams) {
             authWindow.close();
               authWindow = null;
           });
-        } else if (code) {
-          resolve(code);
+        } else if (token) {
+          resolve(token);
           authWindow.removeAllListeners('closed');
           setImmediate(function () {
             authWindow.close();
