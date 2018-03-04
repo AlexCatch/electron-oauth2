@@ -137,8 +137,9 @@ module.exports = function (config, windowParams) {
   }
 
   return {
-    getAuthorizationCode: getAuthorizationCode,
-    getAccessToken: getAccessToken,
-    refreshToken: refreshToken
+      getBearerToken: getBearerToken,
+      getAccessToken: getAccessToken,
+      refreshToken: refreshToken
   };
+
 };
